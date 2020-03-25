@@ -1,0 +1,49 @@
+spring:
+  jackson:
+    time-zone: Asia/Shanghai
+    date-format: yyyy-MM-dd HH:mm:ss
+  profiles:
+    active: dev
+  servlet:
+    multipart:
+      max-request-size: 30MB
+      max-file-size: 30MB
+  devtools:
+    restart:
+      enabled: true
+  transaction:
+    rollback-on-commit-failure: true
+
+  mvc:
+    view:
+      prefix: /WEB-INF/jsp/
+      suffix: .jsp
+
+
+# mybatis 的配置
+mybatis-plus:
+  mapper-locations: classpath:mappers/**/*Mapper.xml
+  #实体扫描，多个package用逗号或者分号分隔
+  typeAliasesPackage: cn.hill.**.model
+  # 这部分大多为 mybatis 原生的配置
+  configuration:
+    # 驼峰命名规则
+    map-underscore-to-camel-case: true
+    # 全局地开启或关闭配置文件中的所有映射器已经配置的任何缓存
+    cache-enabled: false
+    # 若有值为 null 也进行字段映射，针对返回类型为 map 的对象
+    callSettersOnNulls: true
+    # 配置slq打印日志
+    #log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    # 关闭 mybatis-plus LOGO 输出
+    banner: false
+    db-config:
+      # 全局默认的主键生成策略，雪花(String 或 Long)的方式，会自动识别是 String 还是 Long
+      id-type: assign_id
+      #逻辑删除配置，同时需要在实体类中声明 @TableLogic;
+      #全局逻辑删除字段值，优先级是声明 @TableLogic 的字段优先，若是没有声明 @TableLogic  则使用全局配置的字段，
+      #若实体没有全局配置的字段则不启用逻辑删除（since3.3.0)。
+      logic-delete-field: delFlag
+      logic-delete-value: 1
+      logic-not-delete-value: 0
